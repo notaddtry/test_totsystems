@@ -1,0 +1,141 @@
+{
+  "messages": [
+    {
+      "id": "1",
+      "from": "Alex",
+      "to": "Monika",
+      "body": "loremipsum",
+      "folder": "incoming",
+      "isRead": false,
+      "isMarked": false,
+      "isFavorite": false
+    },
+    {
+      "id": "2",
+      "from": "Alex",
+      "to": "Monika",
+      "body": "loremipsum",
+      "folder": "outgoing",
+      "isRead": false,
+      "isMarked": false,
+      "isFavorite": false
+    },
+    {
+      "id": "3",
+      "from": "Alex",
+      "to": "Monika",
+      "body": "loremipsum",
+      "folder": "incoming",
+      "isRead": false,
+      "isMarked": false,
+      "isFavorite": false
+    },
+    {
+      "id": "4",
+      "from": "Alex",
+      "to": "Monika",
+      "body": "loremipsum",
+      "folder": "outgoing",
+      "isRead": false,
+      "isMarked": false,
+      "isFavorite": false
+    },
+    {
+      "id": "5",
+      "from": "Alex",
+      "to": "Monika",
+      "body": "loremipsum",
+      "folder": "incoming",
+      "isRead": false,
+      "isMarked": false,
+      "isFavorite": false
+    },
+    {
+      "id": "6",
+      "from": "Alex",
+      "to": "Monika",
+      "body": "loremipsum",
+      "folder": "deleted",
+      "isRead": false,
+      "isMarked": false,
+      "isFavorite": false
+    },
+    {
+      "id": "7",
+      "from": "Alex",
+      "to": "Monika",
+      "body": "loremipsum",
+      "folder": "deleted",
+      "isRead": false,
+      "isMarked": false,
+      "isFavorite": false
+    },
+    {
+      "id": "8",
+      "from": "Alex",
+      "to": "Monika",
+      "body": "loremipsum",
+      "folder": "copy",
+      "isRead": false,
+      "isMarked": false,
+      "isFavorite": false
+    },
+    {
+      "id": "9",
+      "from": "Alex",
+      "to": "Monika",
+      "body": "loremipsum",
+      "folder": "incoming",
+      "isRead": false,
+      "isMarked": false,
+      "isFavorite": false
+    },
+    {
+      "id": "10",
+      "from": "Alex",
+      "to": "Monika",
+      "body": "loremipsum",
+      "folder": "outgoing",
+      "isRead": false,
+      "isMarked": false,
+      "isFavorite": false
+    },
+    {
+      "id": "11",
+      "from": "Alex",
+      "to": "Monika",
+      "body": "loremipsum",
+      "folder": "spam",
+      "isRead": false,
+      "isMarked": false,
+      "isFavorite": false
+    }
+  ],
+  "folders": [
+    {
+      "id": "1",
+      "name": "incoming",
+      "canBeEdited": false
+    },
+    {
+      "id": "2",
+      "name": "outgoing",
+      "canBeEdited": false
+    },
+    {
+      "id": "3",
+      "name": "spam",
+      "canBeEdited": false
+    },
+    {
+      "id": "4",
+      "name": "copy",
+      "canBeEdited": false
+    },
+    {
+      "id": "5",
+      "name": "deleted",
+      "canBeEdited": false
+    }
+  ]
+}
