@@ -20,9 +20,9 @@ class FolderService {
 
     return { folder, messagesInFolder }
   }
-  async create(body) {
+  async create(name) {
     const newFolder = {
-      ...body,
+      name,
       id: Date.now().toString(),
       canBeEdited: true,
     }

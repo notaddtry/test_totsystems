@@ -22,8 +22,7 @@ class FolderController {
   }
   async create(req, res) {
     try {
-      const data = await folderService.create(req.body)
-
+      const data = await folderService.create(req.body.name)
       res.json(data.newFolder)
     } catch (e) {
       res.status(400).json(e.message || { message: 'Папка не создана!' })

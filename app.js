@@ -6,7 +6,7 @@ dotenv.config()
 
 const app = express()
 
-app.use(express.json())
+app.use(express.json({ extended: true }))
 app.use('/api/folders', folderRouter)
 app.use('/api/messages', messagesRouter)
 
