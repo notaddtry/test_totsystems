@@ -1,77 +1,64 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useHttp } from '../../hooks/http.hook'
-import { IFolder } from '../../types/folder.interface'
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
+import {
+  fetchFolders,
+  addFolder,
+  removeFolder,
+  editFolder,
+} from '../../store/slices/folderSlice'
+import FolderItem from './FolderItem'
 
 const FolderList = () => {
-  const { request, loading, error, clearError } = useHttp()
-  const [folders, setFolders] = useState<IFolder[]>([])
-  const folderRef = useRef<HTMLInputElement>(null)
-  const [createdName, setCreatedName] = useState<string | undefined>('')
+  const dispatch = useAppDispatch()
 
-  const fetchFolder = async () => {
-    try {
-      clearError()
-      const data = await request('/api/folders')
-      setFolders(data)
-    } catch (error) {
-      console.log(error)
+  const [folderName, setFolderName] = useState('')
+
+  const folders = useAppSelector((state) => state.folder.folders)
+
+  const postFolder = () => {
+    if (folderName.trim()) {
+      M.updateTextFields()
+      dispatch(addFolder(folderName))
+      setFolderName('')
     }
   }
 
-  const addFolder = () => {
-    setCreatedName(folderRef.current?.value)
-  }
-
-  const postFolder = useCallback(async () => {
-    try {
-      const data = await request(
-        '/api/folders',
-        'POST',
-        folderRef.current?.value
-      )
-    } catch (error) {
-      console.log(error)
-    }
-  }, [createdName])
-
-  useEffect(() => {
-    fetchFolder()
-  }, [postFolder])
-
-  useEffect(() => {
-    postFolder()
-  }, [createdName])
+  // const updateFolder = (event: React.MouseEvent<HTMLElement>, id: string) => {
+  //   event.preventDefault()
+  //   event.stopPropagation()
+  //   if (folderName.trim()) {
+  //     setFolderName('')
+  //     dispatch(editFolder({ body: folderName, id }))
+  //   }
+  // }
 
   useEffect(() => {
     M.updateTextFields()
-  }, [folders])
-
-  // if (loading) {
-  //   return <span>loading...</span>
-  // }
-  if (error) {
-    return <span>something went wrong...</span>
-  }
+    dispatch(fetchFolders())
+  }, [])
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
-      {folders.map((folder) => (
-        <Link
-          key={folder.id}
-          style={{ marginRight: '1rem' }}
-          to={`/folder/${folder.id}`}>
-          {folder.name}
-        </Link>
-      ))}
-      <span onClick={addFolder}>+</span>
+      {folders.length ? (
+        <ul className='collection'>
+          {folders.map((folder) => (
+            <FolderItem {...folder} key={folder.id} />
+          ))}
+        </ul>
+      ) : (
+        <span>Загрузка...</span>
+      )}
+
+      <span onClick={postFolder}>+</span>
       <div className='modal_folder'>
         <div className='input-field col s6'>
           <input
             placeholder='Enter..'
             id='folder_name'
             type='text'
-            ref={folderRef}
+            value={folderName}
+            onChange={(e) => setFolderName(e.target.value)}
           />
           <label htmlFor='folder_name'>Folder Name</label>
         </div>

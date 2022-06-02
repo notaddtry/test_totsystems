@@ -41,7 +41,7 @@ class FolderController {
     try {
       const data = await folderService.remove(req.params.id)
 
-      res.json(data.message)
+      res.json(data.paramsId)
     } catch (e) {
       res.status(400).json(e.message || { message: 'Папка не найдена!' })
     }

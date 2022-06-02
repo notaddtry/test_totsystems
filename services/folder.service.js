@@ -53,6 +53,10 @@ class FolderService {
     const folderIndex = folders.findIndex((folder) => folder.id === paramsId)
     const folder = folders.find((folder) => folder.id === paramsId)
 
+    if (!folder.canBeEdited) {
+      throw new Error('Папка не может быть удалена!')
+    }
+
     if (folderIndex === -1) {
       throw new Error('Папка не найдена')
     }
@@ -67,7 +71,7 @@ class FolderService {
       }
     }
 
-    return { message: 'Папка удалена!' }
+    return { paramsId }
   }
 }
 

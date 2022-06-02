@@ -1,7 +1,10 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
+import folderSlice from './slices/folderSlice'
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    folder: folderSlice,
+  },
 })
 
 export type AppDispatch = typeof store.dispatch

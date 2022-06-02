@@ -1,11 +1,8 @@
 import React from 'react'
+import Folder from '../components/Folder/Folder'
 
 const FolderPage = () => {
-  return (
-    <div>
-      <h1>Folder</h1>
-    </div>
-  )
+  return <Folder />
 }
 
 export default FolderPage
