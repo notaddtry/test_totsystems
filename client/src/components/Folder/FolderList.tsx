@@ -6,20 +6,26 @@ import {
   addFolder,
   removeFolder,
   editFolder,
+  setShowModal,
 } from '../../store/slices/folderSlice'
+import { fetchMessages } from '../../store/slices/messageSlice'
 import FolderItem from './FolderItem'
+import NameModal from './NameModal'
+import SearchMessages from './SearchMessages'
 
 const FolderList = () => {
   const dispatch = useAppDispatch()
+  const showModal = useAppSelector((state) => state.folder.showModal)
 
   const [folderName, setFolderName] = useState('')
 
   const folders = useAppSelector((state) => state.folder.folders)
+  const messages = useAppSelector((state) => state.message.messages)
 
   const postFolder = () => {
     if (folderName.trim()) {
-      M.updateTextFields()
       dispatch(addFolder(folderName))
+      dispatch(setShowModal(false))
       setFolderName('')
     }
   }
@@ -34,36 +40,49 @@ const FolderList = () => {
   // }
 
   useEffect(() => {
-    M.updateTextFields()
     dispatch(fetchFolders())
+    dispatch(fetchMessages())
   }, [])
 
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
-      {folders.length ? (
-        <ul className='collection'>
-          {folders.map((folder) => (
-            <FolderItem {...folder} key={folder.id} />
-          ))}
-        </ul>
-      ) : (
-        <span>Загрузка...</span>
-      )}
+  useEffect(() => {
+    M.updateTextFields()
+  }, [showModal])
 
-      <span onClick={postFolder}>+</span>
-      <div className='modal_folder'>
-        <div className='input-field col s6'>
-          <input
-            placeholder='Enter..'
-            id='folder_name'
-            type='text'
-            value={folderName}
-            onChange={(e) => setFolderName(e.target.value)}
-          />
-          <label htmlFor='folder_name'>Folder Name</label>
-        </div>
+  return (
+    <>
+      <h2>Список папок</h2>
+
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
+        {folders.length ? (
+          <ul className='collection'>
+            {folders.map((folder) => (
+              <FolderItem {...folder} key={folder.id} />
+            ))}
+          </ul>
+        ) : (
+          <span>Загрузка...</span>
+        )}
+
+        <button
+          className='waves-effect waves-light btn deep-purple darken-1'
+          onClick={() => dispatch(setShowModal(true))}>
+          Добавить папку
+        </button>
+        {showModal ? (
+          <>
+            <span onClick={postFolder}>+</span>
+            <NameModal
+              setFolderName={setFolderName}
+              folderName={folderName}
+              placeholder={'Folder Name'}
+              postFolder={postFolder}
+            />
+          </>
+        ) : (
+          <></>
+        )}
       </div>
-    </div>
+    </>
   )
 }
 

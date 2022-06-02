@@ -4,6 +4,7 @@ import { useAppDispatch } from '../../store/hooks'
 import { removeFolder } from '../../store/slices/folderSlice'
 import { IFolder } from '../../types'
 import { request } from '../../hooks/http.hook'
+import SearchMessages from './SearchMessages'
 
 const FolderItem: React.FC<IFolder> = ({ name, id, canBeEdited }) => {
   const dispatch = useAppDispatch()
@@ -16,8 +17,8 @@ const FolderItem: React.FC<IFolder> = ({ name, id, canBeEdited }) => {
   }
 
   const fetchMessagesCount = async () => {
-    const data = await request(`/api/folders/${id}`)
-    setMessagesCount(data.messagesInFolder.length)
+    const data = await request('/api/messages')
+    setMessagesCount(data.length)
   }
 
   useEffect(() => {

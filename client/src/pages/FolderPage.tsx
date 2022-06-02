@@ -1,5 +1,5 @@
 import React from 'react'
-import Folder from '../components/Folder/Folder'
+import Folder from '../components/Folder/FolderInPage'
 
 const FolderPage = () => {
   return <Folder />

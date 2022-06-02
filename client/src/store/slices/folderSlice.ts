@@ -1,25 +1,24 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { request } from '../../hooks/http.hook'
-import { IFolder } from '../../types'
+import { IError, IFolder } from '../../types'
 
 interface IInitialState {
   loading: boolean
   error: string | null | undefined
   folders: IFolder[]
+  showModal: boolean
 }
 
 const initialState: IInitialState = {
   loading: false,
   error: null,
   folders: [],
+  showModal: false,
 }
 
 interface IEditInterface {
   body: string
   id: string
-}
-interface IError {
-  message: string | null | undefined
 }
 
 export const fetchFolders = createAsyncThunk(
@@ -73,15 +72,19 @@ export const editFolder = createAsyncThunk(
 const folderSlice = createSlice({
   name: 'folder',
   initialState,
-  reducers: {},
+  reducers: {
+    setShowModal(state, action) {
+      state.showModal = action.payload
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchFolders.pending, (state) => {
         state.loading = true
       })
       .addCase(fetchFolders.fulfilled, (state, action) => {
-        state.loading = false
         state.folders = action.payload
+        state.loading = false
         // console.log(state.folders)
       })
       .addCase(fetchFolders.rejected, (state, action) => {
@@ -94,8 +97,8 @@ const folderSlice = createSlice({
         state.loading = true
       })
       .addCase(addFolder.fulfilled, (state, action) => {
-        state.loading = false
         state.folders.push(action.payload)
+        state.loading = false
       })
       .addCase(addFolder.rejected, (state, action) => {
         state.loading = false
@@ -107,10 +110,10 @@ const folderSlice = createSlice({
         state.loading = true
       })
       .addCase(removeFolder.fulfilled, (state, action) => {
-        state.loading = false
         state.folders = state.folders.filter(
           (folder) => folder.id !== action.payload
         )
+        state.loading = false
       })
       .addCase(removeFolder.rejected, (state, action) => {
         state.loading = false
@@ -122,15 +125,13 @@ const folderSlice = createSlice({
         state.loading = true
       })
       .addCase(editFolder.fulfilled, (state, action) => {
-        console.log(action.payload)
-
-        state.loading = false
         const foldetToEdit = state.folders.find(
           (folder) => folder.id === action.payload.id
         )
         if (foldetToEdit) {
           foldetToEdit.name = action.payload.name
         }
+        state.loading = false
       })
       .addCase(editFolder.rejected, (state, action) => {
         state.loading = false
@@ -138,5 +139,7 @@ const folderSlice = createSlice({
       })
   },
 })
+
+export const { setShowModal } = folderSlice.actions
 
 export default folderSlice.reducer

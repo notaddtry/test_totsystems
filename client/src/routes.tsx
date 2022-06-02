@@ -5,6 +5,7 @@ import HomeLayout from './layout/HomeLayout'
 import FolderPage from './pages/FolderPage'
 import HomePage from './pages/HomePage'
 import MessagePage from './pages/MessagePage'
+import SearchPage from './pages/SearchPage'
 import Undefined from './pages/Undefined'
 
 const useRoutes = () => {
@@ -14,6 +15,7 @@ const useRoutes = () => {
         <Route element={<HomePage />} index />
         <Route element={<FolderPage />} path='/folder/:id' />
         <Route element={<MessagePage />} path='/message/:id' />
+        <Route element={<SearchPage />} path='/message' />
       </Route>
       <Route path='*' element={<Undefined />} />
     </Routes>

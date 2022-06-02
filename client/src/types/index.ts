@@ -14,3 +14,7 @@ export interface IMessage {
   isMarked: boolean
   isFavorite: boolean
 }
+
+export interface IError {
+  message: string | null | undefined
+}
