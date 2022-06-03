@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import {
   fetchFolders,
@@ -11,9 +11,10 @@ import {
 import { fetchMessages } from '../../store/slices/messageSlice'
 import FolderItem from './FolderItem'
 import NameModal from './NameModal'
-import SearchMessages from './SearchMessages'
+import SearchMessages from '../Search/SearchMessages'
 
 const FolderList = () => {
+  const location = useLocation()
   const dispatch = useAppDispatch()
   const showModal = useAppSelector((state) => state.folder.showModal)
 
@@ -27,6 +28,7 @@ const FolderList = () => {
       dispatch(addFolder(folderName))
       dispatch(setShowModal(false))
       setFolderName('')
+      M.toast({ html: 'Папка создана!' })
     }
   }
 
@@ -48,11 +50,17 @@ const FolderList = () => {
     M.updateTextFields()
   }, [showModal])
 
+  useEffect(() => {
+    return () => {
+      dispatch(setShowModal(false))
+    }
+  }, [location])
+
   return (
     <>
       <h2>Список папок</h2>
 
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
+      <div className='row'>
         {folders.length ? (
           <ul className='collection'>
             {folders.map((folder) => (
@@ -70,7 +78,6 @@ const FolderList = () => {
         </button>
         {showModal ? (
           <>
-            <span onClick={postFolder}>+</span>
             <NameModal
               setFolderName={setFolderName}
               folderName={folderName}

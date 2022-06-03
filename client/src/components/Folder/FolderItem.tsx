@@ -4,7 +4,7 @@ import { useAppDispatch } from '../../store/hooks'
 import { removeFolder } from '../../store/slices/folderSlice'
 import { IFolder } from '../../types'
 import { request } from '../../hooks/http.hook'
-import SearchMessages from './SearchMessages'
+import SearchMessages from '../Search/SearchMessages'
 
 const FolderItem: React.FC<IFolder> = ({ name, id, canBeEdited }) => {
   const dispatch = useAppDispatch()
@@ -14,11 +14,14 @@ const FolderItem: React.FC<IFolder> = ({ name, id, canBeEdited }) => {
     event.preventDefault()
 
     dispatch(removeFolder(id))
+    M.toast({ html: 'Папка удалена!' })
   }
 
   const fetchMessagesCount = async () => {
-    const data = await request('/api/messages')
-    setMessagesCount(data.length)
+    const data: IFolder = await request(`/api/folders/${id}`)
+    if (data.messagesInFolder) {
+      setMessagesCount(data.messagesInFolder?.length)
+    }
   }
 
   useEffect(() => {

@@ -2,6 +2,7 @@ export interface IFolder {
   id: string
   name: string
   canBeEdited: boolean
+  messagesInFolder?: IMessage[]
 }
 
 export interface IMessage {
@@ -13,6 +14,7 @@ export interface IMessage {
   isRead: boolean
   isMarked: boolean
   isFavorite: boolean
+  date: string
 }
 
 export interface IError {

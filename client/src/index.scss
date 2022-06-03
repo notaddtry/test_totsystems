@@ -1,1 +1,15 @@
 @import 'materialize-css';
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1 1 100%;
+}
+
+.modal_folder {
+  margin-top: 20px;
+}

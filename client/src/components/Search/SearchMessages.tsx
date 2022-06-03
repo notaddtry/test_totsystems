@@ -4,40 +4,44 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { searchMessages } from '../../store/slices/messageSlice'
 import { IMessage } from '../../types'
 
+import styles from './search.module.scss'
+
 interface ISearchMessages {
-  messages: IMessage[]
-  setMessages: React.Dispatch<React.SetStateAction<IMessage[]>>
+  search: string
+  setSearch: React.Dispatch<React.SetStateAction<string>>
 }
 
-const SearchMessages: React.FC = ({}) => {
-  const [search, setSearch] = useState('')
+const SearchMessages: React.FC<ISearchMessages> = ({ search, setSearch }) => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const searchedMessages = useAppSelector((state) => state.message.messages)
 
   const searchHandle = () => {
-    navigate(`/message?s=${search}`)
+    if (search.trim()) {
+      return navigate(`/message?s=${search}`)
+    }
+    navigate('/message')
     // dispatch(searchMessages({ query: search }))
   }
 
   return (
-    <div className='modal_folder row'>
-      <div className='input-field col s4'>
+    <>
+      <div className='modal_folder row valign-wrapper center'>
         <input
-          placeholder='Enter..'
-          id='folder_name'
+          placeholder='Поиск сообщений'
           type='text'
           value={search}
+          className='white col s6'
+          // value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <label htmlFor='folder_name'>Поиск</label>
+        <button
+          className='waves-effect waves-light btn deep-purple darken-1 col s2'
+          onClick={searchHandle}>
+          Вперед!
+        </button>
       </div>
-      <button
-        className='waves-effect waves-light btn deep-purple darken-1'
-        onClick={searchHandle}>
-        Отправить
-      </button>
-    </div>
+    </>
   )
 }
 

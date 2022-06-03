@@ -6,12 +6,10 @@ let messages = db.messages
 class MessageService {
   async getAll(s) {
     let fetchedMessages = messages
+    let message
 
     if (s) {
       fetchedMessages = messages.filter((message) => message.body.includes(s))
-      if (!fetchedMessages.length) {
-        throw new Error('Сообщения не найдены')
-      }
     }
 
     return { fetchedMessages }

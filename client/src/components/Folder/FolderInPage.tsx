@@ -1,23 +1,25 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { request } from '../../hooks/http.hook'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { editFolder, setShowModal } from '../../store/slices/folderSlice'
 import { IError, IFolder, IMessage } from '../../types'
 import NameModal from './NameModal'
-import SearchMessages from './SearchMessages'
+import SearchMessages from '../Search/SearchMessages'
+import Loader from '../Loader'
 
-const Folder = () => {
+const FolderInPage: React.FC = () => {
   const params = useParams()
+  const dispatch = useAppDispatch()
+  const location = useLocation()
 
   const folders = useAppSelector((state) => state.folder.folders)
   const folderToUpdate = folders.find((folder) => folder.id === params.id)
 
-  const dispatch = useAppDispatch()
   const [messages, setMessages] = useState<IMessage[]>([])
   const [folder, setFolder] = useState<IFolder>()
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<IError>()
+  const [error, setError] = useState<IError | null>(null)
 
   const [newFolderName, setNewFolderName] = useState(folder?.name || '')
   const showModal = useAppSelector((state) => state.folder.showModal)
@@ -37,13 +39,14 @@ const Folder = () => {
     event.preventDefault()
     event.stopPropagation()
     if (newFolderName?.trim()) {
-      // setNewFolderName('')
       dispatch(editFolder({ body: newFolderName, id }))
       dispatch(setShowModal(false))
+      M.toast({ html: 'Папка обновлена!' })
     }
   }
 
   useEffect(() => {
+    setError(null)
     setLoading(true)
     fetchData()
   }, [folderToUpdate])
@@ -52,8 +55,18 @@ const Folder = () => {
     M.updateTextFields()
   }, [showModal])
 
+  useEffect(() => {
+    return () => {
+      dispatch(setShowModal(false))
+    }
+  }, [location])
+
   if (loading) {
-    return <span>Загрузка...</span>
+    return <Loader />
+  }
+
+  if (error) {
+    return <h2>{error.message}</h2>
   }
 
   return (
@@ -88,10 +101,11 @@ const Folder = () => {
         </div>
       ) : (
         <>
-          <div className='row  center '>
-            <h5 className='col s4'>From</h5>
-            <h5 className='col s4'>To</h5>
-            <h5 className='col s4'>Preview</h5>
+          <div className='row  center'>
+            <h4 className='col s3'>From</h4>
+            <h4 className='col s3'>To</h4>
+            <h4 className='col s3'>Preview</h4>
+            <h4 className='col s3'>Date</h4>
           </div>
           <ul className='collection'>
             {messages.map((message) => (
@@ -102,11 +116,12 @@ const Folder = () => {
                 style={{ padding: '10px 0px' }}
                 key={message.id}>
                 <Link to={`/message/${message.id}`}>
-                  <span className='col s4 '>{message.from}</span>
-                  <span className='col s4'>{message.to}</span>
-                  <span className='col s4'>
+                  <span className='col s3'>{message.from}</span>
+                  <span className='col s3'>{message.to}</span>
+                  <span className='col s3'>
                     {message.body.substr(0, 10) + '...'}
                   </span>
+                  <span className='col s3'>{message.date}</span>
                 </Link>
               </li>
             ))}
@@ -117,4 +132,4 @@ const Folder = () => {
   )
 }
 
-export default Folder
+export default FolderInPage

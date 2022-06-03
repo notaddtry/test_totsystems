@@ -20,6 +20,7 @@ const NameModal: React.FC<INameModalProps> = ({
           placeholder='Enter..'
           id='folder_name'
           type='text'
+          className='left'
           value={folderName}
           onChange={(e) => setFolderName(e.target.value)}
         />

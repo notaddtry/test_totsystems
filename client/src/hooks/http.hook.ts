@@ -11,8 +11,8 @@ export const request = async (
   headers = {}
 ) => {
   try {
+    headers = requestHeaders
     if (body) {
-      headers = requestHeaders
       body = JSON.stringify({ name: body })
     }
 
@@ -21,7 +21,7 @@ export const request = async (
     const data = await response.json()
 
     if (!response.ok) {
-      throw new Error(data.message || 'Ошибка. Повторите позже')
+      throw new Error(data || 'Ошибка. Повторите позже')
     }
 
     return data

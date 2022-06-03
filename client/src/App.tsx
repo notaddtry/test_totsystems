@@ -6,9 +6,11 @@ function App() {
   const routes = useRoutes()
 
   return (
-    <Router>
-      <>{routes}</>
-    </Router>
+    <div className='wrapper'>
+      <Router>
+        <>{routes}</>
+      </Router>
+    </div>
   )
 }
 

@@ -22,6 +22,7 @@ export const fetchMessages = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const data = await request('/api/messages')
+
       return data
     } catch (error) {
       return rejectWithValue(error as IError)
@@ -31,9 +32,10 @@ export const fetchMessages = createAsyncThunk(
 
 export const searchMessages = createAsyncThunk(
   'message/searchMessages',
-  async ({ query }: ISearchMessages, { rejectWithValue }) => {
+  async (query: string, { rejectWithValue }) => {
     try {
       const data = await request(`/api/messages/?s=${query}`)
+
       return data
     } catch (error) {
       return rejectWithValue(error as IError)
@@ -65,13 +67,12 @@ const messageSlice = createSlice({
         state.loading = true
       })
       .addCase(searchMessages.fulfilled, (state, action) => {
-        console.log(action.payload)
-
         state.messages = action.payload
         state.loading = false
         // console.log(state.folders)
       })
       .addCase(searchMessages.rejected, (state, action) => {
+        console.log(action.payload)
         state.loading = false
         // state.error = action.payload
       })

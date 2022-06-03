@@ -8,7 +8,8 @@
       "folder": "incoming",
       "isRead": false,
       "isMarked": false,
-      "isFavorite": false
+      "isFavorite": false,
+      "date": "12.09.2012"
     },
     {
       "id": "2",
@@ -18,7 +19,8 @@
       "folder": "outgoing",
       "isRead": false,
       "isMarked": false,
-      "isFavorite": false
+      "isFavorite": false,
+      "date": "12.09.2011"
     },
     {
       "id": "3",
@@ -28,7 +30,8 @@
       "folder": "incoming",
       "isRead": false,
       "isMarked": false,
-      "isFavorite": false
+      "isFavorite": false,
+      "date": "12.09.2002"
     },
     {
       "id": "4",
@@ -38,7 +41,8 @@
       "folder": "outgoing",
       "isRead": false,
       "isMarked": false,
-      "isFavorite": false
+      "isFavorite": false,
+      "date": "12.09.2022"
     },
     {
       "id": "5",
@@ -48,7 +52,8 @@
       "folder": "incoming",
       "isRead": false,
       "isMarked": false,
-      "isFavorite": false
+      "isFavorite": false,
+      "date": "10.09.2012"
     },
     {
       "id": "6",
@@ -58,7 +63,8 @@
       "folder": "deleted",
       "isRead": false,
       "isMarked": false,
-      "isFavorite": false
+      "isFavorite": false,
+      "date": "12.04.2012"
     },
     {
       "id": "7",
@@ -68,7 +74,8 @@
       "folder": "deleted",
       "isRead": false,
       "isMarked": false,
-      "isFavorite": false
+      "isFavorite": false,
+      "date": "14.09.2012"
     },
     {
       "id": "8",
@@ -78,7 +85,8 @@
       "folder": "copy",
       "isRead": false,
       "isMarked": false,
-      "isFavorite": false
+      "isFavorite": false,
+      "date": "12.09.1012"
     },
     {
       "id": "9",
@@ -88,7 +96,8 @@
       "folder": "incoming",
       "isRead": false,
       "isMarked": false,
-      "isFavorite": false
+      "isFavorite": false,
+      "date": "22.09.2012"
     },
     {
       "id": "10",
@@ -98,7 +107,8 @@
       "folder": "outgoing",
       "isRead": false,
       "isMarked": false,
-      "isFavorite": false
+      "isFavorite": false,
+      "date": "12.09.2122"
     },
     {
       "id": "11",
@@ -108,7 +118,8 @@
       "folder": "spam",
       "isRead": false,
       "isMarked": false,
-      "isFavorite": false
+      "isFavorite": false,
+      "date": "31.09.2012"
     }
   ],
   "folders": [
