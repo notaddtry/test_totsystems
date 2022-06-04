@@ -35,8 +35,10 @@ const FolderItem: React.FC<IFolder> = ({ name, id, canBeEdited }) => {
         <span>[{messagesCount}]</span>
       </Link>
       {canBeEdited ? (
-        <button className='right' onClick={(event) => deleteFolder(event, id)}>
-          X
+        <button
+          className='right btn deep-purple darken-1'
+          onClick={(event) => deleteFolder(event, id)}>
+          <i className='medium material-icons cursor'>delete_forever</i>
         </button>
       ) : (
         <></>

@@ -15,7 +15,14 @@ class MessageService {
     return { fetchedMessages }
   }
   async getOne(paramsId) {
-    return this.findMessage('isRead', paramsId)
+    const message = messages.find((message) => message.id === paramsId)
+    message.isRead = true
+
+    if (!message) {
+      throw new Error('Сообщение не найдено!')
+    }
+
+    return { message }
   }
   async addToMarked(paramsId) {
     return this.findMessage('isMarked', paramsId)
@@ -26,7 +33,7 @@ class MessageService {
 
   findMessage = (paramToFind, paramsId) => {
     const message = messages.find((message) => message.id === paramsId)
-    message[paramToFind] = true
+    message[paramToFind] = !message[paramToFind]
 
     if (!message) {
       throw new Error('Сообщение не найдено!')

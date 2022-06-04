@@ -13,3 +13,18 @@ main {
 .modal_folder {
   margin-top: 20px;
 }
+
+.block_center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.flex_center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cursor {
+  cursor: pointer;
+}

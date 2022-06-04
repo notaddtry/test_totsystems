@@ -1,12 +1,18 @@
+import { useWindowWidth } from '@react-hook/window-size'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useAppSelector } from '../../store/hooks'
 import { IMessage } from '../../types'
 import Loader from '../Loader'
+import MessagesColumns from '../Message/MessagesColumns'
+import MessagesInFolder from '../Message/MessagesInFolder'
 
 const SearchComponent: React.FC = () => {
   const messages = useAppSelector((state) => state.message.messages)
   const loading = useAppSelector((state) => state.message.loading)
+  const width = useWindowWidth()
+
+  const MOBILE_WIDTH = 768
 
   if (loading) {
     return <Loader />
@@ -20,12 +26,7 @@ const SearchComponent: React.FC = () => {
         </div>
       ) : (
         <>
-          <div className='row  center'>
-            <h4 className='col s3'>From</h4>
-            <h4 className='col s3'>To</h4>
-            <h4 className='col s3'>Preview</h4>
-            <h4 className='col s3'>Date</h4>
-          </div>
+          <MessagesColumns />
           <ul className='collection'>
             {messages.map((message) => (
               <li
@@ -34,14 +35,13 @@ const SearchComponent: React.FC = () => {
                 }`}
                 style={{ padding: '10px 0px' }}
                 key={message.id}>
-                <Link to={`/message/${message.id}`}>
-                  <span className='col s3'>{message.from}</span>
-                  <span className='col s3'>{message.to}</span>
-                  <span className='col s3'>
-                    {message.body.substr(0, 10) + '...'}
-                  </span>
-                  <span className='col s3'>{message.date}</span>
-                </Link>
+                <MessagesInFolder
+                  id={message.id}
+                  from={message.from}
+                  body={message.body}
+                  to={message.to}
+                  date={message.date}
+                />
               </li>
             ))}
           </ul>

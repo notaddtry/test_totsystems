@@ -24,6 +24,10 @@ const SearchMessages: React.FC<ISearchMessages> = ({ search, setSearch }) => {
     // dispatch(searchMessages({ query: search }))
   }
 
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') searchHandle()
+  }
+
   return (
     <>
       <div className='modal_folder row valign-wrapper center'>
@@ -33,12 +37,13 @@ const SearchMessages: React.FC<ISearchMessages> = ({ search, setSearch }) => {
           value={search}
           className='white col s6'
           // value={search}
+          onKeyDown={(e) => handleKeyPress(e)}
           onChange={(e) => setSearch(e.target.value)}
         />
         <button
-          className='waves-effect waves-light btn deep-purple darken-1 col s2'
+          className='waves-effect waves-light btn deep-purple darken-1 col s2 flex_center'
           onClick={searchHandle}>
-          Вперед!
+          <i className='material-icons cursor'>search</i>
         </button>
       </div>
     </>

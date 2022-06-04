@@ -29,7 +29,7 @@ const NameModal: React.FC<INameModalProps> = ({
       <button
         className='waves-effect waves-light btn deep-purple darken-1 col s2 push-s4'
         onClick={postFolder}>
-        Отправить
+        <i className='medium material-icons cursor'>send</i>
       </button>
     </div>
   )

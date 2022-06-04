@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { request } from '../../hooks/http.hook'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
@@ -7,11 +7,17 @@ import { IError, IFolder, IMessage } from '../../types'
 import NameModal from './NameModal'
 import SearchMessages from '../Search/SearchMessages'
 import Loader from '../Loader'
+import { useWindowWidth } from '@react-hook/window-size'
+import MessagesInFolder from '../Message/MessagesInFolder'
+import MessagesColumns from '../Message/MessagesColumns'
 
-const FolderInPage: React.FC = () => {
+const MOBILE_WIDTH = 768
+
+const FolderInPage: React.FC = (): JSX.Element => {
   const params = useParams()
   const dispatch = useAppDispatch()
   const location = useLocation()
+  const width = useWindowWidth()
 
   const folders = useAppSelector((state) => state.folder.folders)
   const folderToUpdate = folders.find((folder) => folder.id === params.id)
@@ -72,15 +78,25 @@ const FolderInPage: React.FC = () => {
   return (
     <>
       <div className='row valign-wrapper'>
-        <h2 className='col s9'>Папка:{folder?.name}</h2>
+        <span className='col s9'>
+          <h2>Папка:</h2>
+          <h4>{folder?.name}</h4>
+        </span>
 
         <button
-          className={`'waves-effect waves-light btn deep-purple darken-1 col s3 ${
+          className={`'waves-effect waves-light btn deep-purple darken-1 col s3 flex_center ${
             folder?.canBeEdited ? '' : 'disabled'
           }`}
           disabled={!folder?.canBeEdited}
           onClick={() => dispatch(setShowModal(true))}>
-          Редактировать
+          {width <= MOBILE_WIDTH ? (
+            <i className='large material-icons'>edit</i>
+          ) : (
+            <span className='flex_center'>
+              <i className='large material-icons'>edit</i>
+              Редактировать
+            </span>
+          )}
         </button>
       </div>
 
@@ -101,12 +117,7 @@ const FolderInPage: React.FC = () => {
         </div>
       ) : (
         <>
-          <div className='row  center'>
-            <h4 className='col s3'>From</h4>
-            <h4 className='col s3'>To</h4>
-            <h4 className='col s3'>Preview</h4>
-            <h4 className='col s3'>Date</h4>
-          </div>
+          <MessagesColumns />
           <ul className='collection'>
             {messages.map((message) => (
               <li
@@ -115,14 +126,13 @@ const FolderInPage: React.FC = () => {
                 }`}
                 style={{ padding: '10px 0px' }}
                 key={message.id}>
-                <Link to={`/message/${message.id}`}>
-                  <span className='col s3'>{message.from}</span>
-                  <span className='col s3'>{message.to}</span>
-                  <span className='col s3'>
-                    {message.body.substr(0, 10) + '...'}
-                  </span>
-                  <span className='col s3'>{message.date}</span>
-                </Link>
+                <MessagesInFolder
+                  id={message.id}
+                  from={message.from}
+                  body={message.body}
+                  to={message.to}
+                  date={message.date}
+                />
               </li>
             ))}
           </ul>

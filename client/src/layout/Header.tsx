@@ -20,26 +20,24 @@ const Header = () => {
       <div className='nav-wrapper row valign-wrapper'>
         {location.pathname !== '/' ? (
           <button
-            className='waves-effect waves-light btn deep-purple darken-1 col s1'
+            className='waves-effect waves-light btn deep-purple darken-1 col s1 block_center flex_center'
             onClick={clickHandler}>
-            Назад
+            <i className='material-icons'>arrow_back</i>
           </button>
         ) : (
           <>
-            <div className='col s1'></div>
+            <div className='col s1 block_center'></div>
           </>
         )}
-        <div className='col s6'>
+        <div className='col s6 block_center'>
           <SearchMessages search={search} setSearch={setSearch} />
         </div>
 
-        <ul id='nav-mobile' className='hide-on-med-and-down col s2'>
-          <li className='waves-effect waves-light btn deep-purple darken-1'>
-            <Link to='/'>
-              <span>Home</span>
-            </Link>
-          </li>
-        </ul>
+        <Link
+          to='/'
+          className='waves-effect waves-light btn deep-purple darken-1 col s1 block_center flex_center'>
+          <i className='material-icons cursor'>home</i>
+        </Link>
       </div>
     </nav>
   )
