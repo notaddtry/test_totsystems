@@ -1,4 +1,4 @@
-import { folderService } from '../services/folder.service.js'
+const folderService = require('../services/folder.service.js')
 
 class FolderController {
   async getAll(_, res) {

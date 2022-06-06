@@ -1,4 +1,4 @@
-import { messageService } from '../services/message.service.js'
+const messageService = require('../services/message.service.js')
 
 class MessageController {
   async getAll(req, res) {

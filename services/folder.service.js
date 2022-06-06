@@ -1,12 +1,4 @@
-// const db = await import('../db.json', {
-//   assert: { type: 'json' },
-// })
-
-const db = import('../db.json', {
-  assert: {
-    type: 'json',
-  },
-})
+const db = require('../db.json')
 
 let folders = db.folders
 let messages = db.messages

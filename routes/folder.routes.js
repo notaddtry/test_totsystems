@@ -1,5 +1,5 @@
-import { Router } from 'express'
-import { folderController } from '../controllers/folder.controller.js'
+const Router = require('express')
+const folderController = require('../controllers/folder.controller.js')
 
 const router = Router()
 

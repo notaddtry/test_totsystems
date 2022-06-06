@@ -1,14 +1,11 @@
-import express from 'express'
-import cors from 'cors'
-import path from 'path'
-import dotenv from 'dotenv'
-import { dirname } from 'path'
-import { fileURLToPath } from 'url'
-import folderRouter from './routes/folder.routes.js'
-import messagesRouter from './routes/message.routes.js'
-dotenv.config()
+const express = require('express')
+const cors = require('cors')
+const path = require('path')
+const dotenv = require('dotenv').config()
+dotenv()
 
-const __dirname = dirname(fileURLToPath(import.meta.url))
+const folderRouter = require('./routes/folder.routes.js')
+const messagesRouter = require('./routes/message.routes.js')
 
 const app = express()
 const PORT = process.env.PORT || 4242
