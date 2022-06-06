@@ -18,12 +18,13 @@ app.use('/api/folders', folderRouter)
 app.use('/api/messages', messagesRouter)
 // notaddtry-mail.vercel.app
 
-// "rewrites": [
-//   {
-//     "source": "/",
-//     "destination": "/api/folders"
-//   }
-// ]
+// ,
+//   "rewrites": [
+//     {
+//       "source": "/(.*)",
+//       "destination": "/app.js"
+//     }
+//   ]
 
 let PORT = process.env.PORT || 4242
 
