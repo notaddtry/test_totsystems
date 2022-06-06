@@ -35,15 +35,22 @@ app.use('/api/messages', messagesRouter)
 
 let PORT = process.env.PORT || 4242
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, 'client', 'build')))
+// if (process.env.NODE_ENV === 'production') {
+//   app.use(express.static(path.join(__dirname, 'client', 'build')))
 
-  app.get('*', (_, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
-  })
+//   app.get('*', (_, res) => {
+//     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+//   })
 
-  PORT = process.env.PROD_PORT
-}
+//   PORT = process.env.PROD_PORT
+// }
+app.use(express.static(path.join(__dirname, 'client', 'build')))
+
+app.get('*', (_, res) => {
+  res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+})
+
+PORT = process.env.PROD_PORT
 
 async function start() {
   try {
