@@ -15,4 +15,4 @@ If you want to test-drive this project in your localhost,you need to clone this 
 then run into terminal npm run local => 
 then run into terminal npm run dev
 
-All your request from frontend will proxy to http://localhost:5000,where backend relocated.
+All your request from frontend will proxy to http://localhost:5000 ,where backend relocated.
