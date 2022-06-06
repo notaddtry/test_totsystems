@@ -2,7 +2,11 @@
 //   assert: { type: 'json' },
 // })
 
-import db from '../db.json'
+const db = import('../db.json', {
+  assert: {
+    type: 'json',
+  },
+})
 
 let folders = db.folders
 let messages = db.messages
