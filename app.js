@@ -33,7 +33,7 @@ app.use('/api/messages', messagesRouter)
 //     }
 //   ]
 
-let PORT = process.env.PORT || 4242
+// let PORT = process.env.PORT || 4242
 
 // if (process.env.NODE_ENV === 'production') {
 //   app.use(express.static(path.join(__dirname, 'client', 'build')))
@@ -50,7 +50,7 @@ app.get('*', (_, res) => {
   res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
 })
 
-PORT = process.env.PROD_PORT
+const PORT = process.env.PROD_PORT || 8000
 
 async function start() {
   try {
