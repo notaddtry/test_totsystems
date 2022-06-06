@@ -14,22 +14,6 @@ app.use(express.json({ extended: true }))
 app.use(cors())
 app.use('/api/folders', folderRouter)
 app.use('/api/messages', messagesRouter)
-// notaddtry-mail.vercel.app
-// "homepage": "https://test-totsystems.vercel.app",
-
-// ,
-//     {
-//       "src": "./client/build",
-//       "use": "@vercel/static"
-//     }
-
-// ,
-//   "rewrites": [
-//     {
-//       "source": "/(.*)",
-//       "destination": "/app.js"
-//     }
-//   ]
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, 'client', 'build')))
