@@ -11,6 +11,7 @@ dotenv.config()
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
 const app = express()
+const PORT = process.env.PORT || 4242
 
 app.use(express.json({ extended: true }))
 app.use(cors())
@@ -33,24 +34,13 @@ app.use('/api/messages', messagesRouter)
 //     }
 //   ]
 
-// let PORT = process.env.PORT || 4242
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, 'client', 'build')))
 
-// if (process.env.NODE_ENV === 'production') {
-//   app.use(express.static(path.join(__dirname, 'client', 'build')))
-
-//   app.get('*', (_, res) => {
-//     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
-//   })
-
-//   PORT = process.env.PROD_PORT
-// }
-app.use(express.static(path.join(__dirname, 'client', 'build')))
-
-app.get('*', (_, res) => {
-  res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
-})
-
-const PORT = process.env.PROD_PORT || 8000
+  app.get('*', (_, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+  })
+}
 
 async function start() {
   try {
