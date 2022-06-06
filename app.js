@@ -11,6 +11,10 @@ const __dirname = path.dirname(__filename)
 
 const app = express()
 
+app.use(express.json({ extended: true }))
+app.use('/api/folders', folderRouter)
+app.use('/api/messages', messagesRouter)
+
 if (process.env.NODE_ENV === 'production') {
   app.use('/', express.static(path.join(__dirname, 'client', 'build')))
 
@@ -18,10 +22,6 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
   })
 }
-
-app.use(express.json({ extended: true }))
-app.use('/api/folders', folderRouter)
-app.use('/api/messages', messagesRouter)
 
 let PORT = process.env.PORT || 4242
 
