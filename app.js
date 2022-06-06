@@ -1,8 +1,8 @@
 const express = require('express')
 const cors = require('cors')
 const path = require('path')
-const dotenv = require('dotenv').config()
-dotenv()
+const dotenv = require('dotenv')
+dotenv.config()
 
 const folderRouter = require('./routes/folder.routes.js')
 const messagesRouter = require('./routes/message.routes.js')
