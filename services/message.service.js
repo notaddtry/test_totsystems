@@ -45,4 +45,6 @@ class MessageService {
   }
 }
 
-export const messageService = new MessageService()
+const messageService = new MessageService()
+
+module.exports = messageService

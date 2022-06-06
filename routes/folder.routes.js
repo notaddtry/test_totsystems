@@ -13,4 +13,4 @@ router.put('/:id', folderController.update)
 
 router.delete('/:id', folderController.remove)
 
-export default router
+module.exports = router

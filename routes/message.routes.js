@@ -11,4 +11,4 @@ router.put('/:id/mark', messageController.addToMarked)
 
 router.put('/:id/favorite', messageController.addToFavorite)
 
-export default router
+module.exports = router

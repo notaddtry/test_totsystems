@@ -75,4 +75,6 @@ class FolderService {
   }
 }
 
-export const folderService = new FolderService()
+const folderService = new FolderService()
+
+module.exports = folderService

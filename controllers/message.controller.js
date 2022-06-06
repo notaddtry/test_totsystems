@@ -40,4 +40,6 @@ class MessageController {
   }
 }
 
-export const messageController = new MessageController()
+const messageController = new MessageController()
+
+module.exports = messageController

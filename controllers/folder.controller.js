@@ -48,4 +48,6 @@ class FolderController {
   }
 }
 
-export const folderController = new FolderController()
+const folderController = new FolderController()
+
+module.exports = folderController
