@@ -6,18 +6,10 @@ import messagesRouter from './routes/message.routes.js'
 import { fileURLToPath } from 'url'
 dotenv.config()
 
-if (process.env.NODE_ENV === 'production') {
-  dotenv.config({ path: __dirname + '/.env.production' })
-}
-
-const app = express()
-
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-app.use(express.json({ extended: true }))
-app.use('/api/folders', folderRouter)
-app.use('/api/messages', messagesRouter)
+const app = express()
 
 if (process.env.NODE_ENV === 'production') {
   app.use('/', express.static(path.join(__dirname, 'client', 'build')))
@@ -27,11 +19,19 @@ if (process.env.NODE_ENV === 'production') {
   })
 }
 
-const PORT = process.env.PORT || 4242
+app.use(express.json({ extended: true }))
+app.use('/api/folders', folderRouter)
+app.use('/api/messages', messagesRouter)
+
+let PORT = process.env.PORT || 4242
+
+if (process.env.NODE_ENV === 'production') {
+  PORT = process.env.PROD_PORT
+}
 
 async function start() {
   try {
-    app.listen(PORT, () => console.log('hello,world'))
+    app.listen(PORT, () => console.log(`hello,world from ${PORT}`))
   } catch (e) {
     console.log('Server error', e.message)
     return
