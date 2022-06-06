@@ -19,6 +19,12 @@ app.use('/api/messages', messagesRouter)
 // notaddtry-mail.vercel.app
 
 // ,
+//     {
+//       "src": "./client/build",
+//       "use": "@vercel/static"
+//     }
+
+// ,
 //   "rewrites": [
 //     {
 //       "source": "/(.*)",
