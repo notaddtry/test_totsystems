@@ -35,7 +35,7 @@ app.use('/api/messages', messagesRouter)
 
 let PORT = process.env.PORT || 4242
 
-if (process.env.NODE_ENV === 'prod') {
+if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, 'client', 'build')))
 
   app.get('*', (_, res) => {
