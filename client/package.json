@@ -1,8 +1,8 @@
 {
-  "homepage": "https://test-totsystems.vercel.app",
   "name": "test_totsystems",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:5000",
   "dependencies": {
     "@react-hook/window-size": "^3.0.7",
     "@reduxjs/toolkit": "^1.8.2",
@@ -29,7 +29,6 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:5000",
   "eslintConfig": {
     "extends": [
       "react-app",
