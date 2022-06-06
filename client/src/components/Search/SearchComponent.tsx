@@ -1,21 +1,27 @@
-import { useWindowWidth } from '@react-hook/window-size'
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
 import { useAppSelector } from '../../store/hooks'
-import { IMessage } from '../../types'
+
 import Loader from '../Loader'
 import MessagesColumns from '../Message/MessagesColumns'
 import MessagesInFolder from '../Message/MessagesInFolder'
 
 const SearchComponent: React.FC = () => {
-  const messages = useAppSelector((state) => state.message.messages)
-  const loading = useAppSelector((state) => state.message.loading)
-  const width = useWindowWidth()
+  const [loading, setLoading] = useState(true)
 
-  const MOBILE_WIDTH = 768
+  const messages = useAppSelector((state) => state.message.messages)
+  const loadingFromStore = useAppSelector((state) => state.message.loading)
+  const error = useAppSelector((state) => state.message.error)
+
+  useEffect(() => {
+    setLoading(loadingFromStore)
+  }, [loadingFromStore])
 
   if (loading) {
     return <Loader />
+  }
+
+  if (error) {
+    return <h6>Ошибка загрузки...</h6>
   }
 
   return (

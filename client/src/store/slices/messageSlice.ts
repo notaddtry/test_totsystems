@@ -1,14 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { request } from '../../hooks/http.hook'
+
+import { request } from '../../components/helpers/http'
 import { IError, IMessage } from '../../types'
 
 interface IInitialState {
   messages: IMessage[]
   loading: boolean
-  error: string | null | undefined
-}
-interface ISearchMessages {
-  query: string
+  error: IError | null
 }
 
 const initialState: IInitialState = {
@@ -55,11 +53,10 @@ const messageSlice = createSlice({
       .addCase(fetchMessages.fulfilled, (state, action) => {
         state.messages = action.payload
         state.loading = false
-        // console.log(state.folders)
       })
       .addCase(fetchMessages.rejected, (state, action) => {
         state.loading = false
-        // state.error = action.payload
+        state.error = action.error as IError
       })
 
       //searchMessages
@@ -69,12 +66,10 @@ const messageSlice = createSlice({
       .addCase(searchMessages.fulfilled, (state, action) => {
         state.messages = action.payload
         state.loading = false
-        // console.log(state.folders)
       })
       .addCase(searchMessages.rejected, (state, action) => {
-        console.log(action.payload)
         state.loading = false
-        // state.error = action.payload
+        state.error = action.error as IError
       })
   },
 })

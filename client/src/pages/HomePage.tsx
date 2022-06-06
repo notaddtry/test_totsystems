@@ -1,7 +1,8 @@
 import React from 'react'
+
 import FolderList from '../components/Folder/FolderList'
 
-const HomePage = () => {
+const HomePage: React.FC = () => {
   return (
     <div>
       <FolderList />

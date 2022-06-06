@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useLocation } from 'react-router'
-import SearchComponent from '../components/Search/SearchComponent'
+
 import { useAppDispatch } from '../store/hooks'
 import { fetchMessages, searchMessages } from '../store/slices/messageSlice'
-import { IMessage } from '../types'
 
-const SearchPage = () => {
+import SearchComponent from '../components/Search/SearchComponent'
+
+const SearchPage: React.FC = () => {
   const location = useLocation()
   const dispatch = useAppDispatch()
   const search = location.search.split('=')[1]
@@ -16,6 +17,7 @@ const SearchPage = () => {
     } else {
       dispatch(fetchMessages())
     }
+    // eslint-disable-next-line
   }, [location])
 
   return (

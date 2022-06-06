@@ -9,20 +9,17 @@ class MessageService {
     let message
 
     if (s) {
-      fetchedMessages = messages.filter((message) => message.body.includes(s))
+      const search = s.toLocaleLowerCase()
+
+      fetchedMessages = messages.filter((message) =>
+        message.body.toLocaleLowerCase().includes(search)
+      )
     }
 
     return { fetchedMessages }
   }
   async getOne(paramsId) {
-    const message = messages.find((message) => message.id === paramsId)
-    message.isRead = true
-
-    if (!message) {
-      throw new Error('Сообщение не найдено!')
-    }
-
-    return { message }
+    return this.findMessage('isRead', paramsId)
   }
   async addToMarked(paramsId) {
     return this.findMessage('isMarked', paramsId)
@@ -33,7 +30,12 @@ class MessageService {
 
   findMessage = (paramToFind, paramsId) => {
     const message = messages.find((message) => message.id === paramsId)
-    message[paramToFind] = !message[paramToFind]
+
+    if (paramToFind === 'isRead') {
+      message[paramToFind] = true
+    } else {
+      message[paramToFind] = !message[paramToFind]
+    }
 
     if (!message) {
       throw new Error('Сообщение не найдено!')

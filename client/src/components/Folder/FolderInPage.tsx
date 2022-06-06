@@ -1,19 +1,20 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react'
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
-import { request } from '../../hooks/http.hook'
+import React, { useCallback, useEffect, useState } from 'react'
+import { useLocation, useParams } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
+
 import { editFolder, setShowModal } from '../../store/slices/folderSlice'
-import { IError, IFolder, IMessage } from '../../types'
-import NameModal from './NameModal'
-import SearchMessages from '../Search/SearchMessages'
-import Loader from '../Loader'
 import { useWindowWidth } from '@react-hook/window-size'
+import { IError, IFolder, IMessage } from '../../types'
+import { request } from '../helpers/http'
+
+import NameModal from './NameModal'
+import Loader from '../Loader'
 import MessagesInFolder from '../Message/MessagesInFolder'
 import MessagesColumns from '../Message/MessagesColumns'
 
 const MOBILE_WIDTH = 768
 
-const FolderInPage: React.FC = (): JSX.Element => {
+const FolderInPage: React.FC = () => {
   const params = useParams()
   const dispatch = useAppDispatch()
   const location = useLocation()
@@ -23,7 +24,7 @@ const FolderInPage: React.FC = (): JSX.Element => {
   const folderToUpdate = folders.find((folder) => folder.id === params.id)
 
   const [messages, setMessages] = useState<IMessage[]>([])
-  const [folder, setFolder] = useState<IFolder>()
+  const [folder, setFolder] = useState<IFolder | undefined>(folderToUpdate)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<IError | null>(null)
 
@@ -41,21 +42,24 @@ const FolderInPage: React.FC = (): JSX.Element => {
     setLoading(false)
   }
 
-  const updateFolder = (event: React.MouseEvent<HTMLElement>, id: string) => {
-    event.preventDefault()
-    event.stopPropagation()
-    if (newFolderName?.trim()) {
-      dispatch(editFolder({ body: newFolderName, id }))
-      dispatch(setShowModal(false))
-      M.toast({ html: 'Папка обновлена!' })
-    }
-  }
+  const updateFolder = useCallback(
+    (event: React.MouseEvent<HTMLElement>, id: string) => {
+      event.preventDefault()
+      event.stopPropagation()
+      if (newFolderName?.trim()) {
+        dispatch(setShowModal(false))
+        dispatch(editFolder({ body: newFolderName, id }))
+        M.toast({ html: 'Папка обновлена!' })
+      }
+    },
+    // eslint-disable-next-line
+    [folder]
+  )
 
   useEffect(() => {
-    setError(null)
-    setLoading(true)
     fetchData()
-  }, [folderToUpdate])
+    // eslint-disable-next-line
+  }, [updateFolder])
 
   useEffect(() => {
     M.updateTextFields()
@@ -63,8 +67,9 @@ const FolderInPage: React.FC = (): JSX.Element => {
 
   useEffect(() => {
     return () => {
-      dispatch(setShowModal(false))
+      if (showModal) dispatch(setShowModal(false))
     }
+    // eslint-disable-next-line
   }, [location])
 
   if (loading) {

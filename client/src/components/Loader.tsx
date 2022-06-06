@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Loader = () => {
+const Loader: React.FC = () => {
   return (
     <div className='preloader-wrapper big active'>
       <div className='spinner-layer spinner-blue-only'>

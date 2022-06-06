@@ -1,5 +1,4 @@
-import { useState, useCallback } from 'react'
-import { Headers, bag } from 'fetch-headers'
+import { Headers } from 'fetch-headers'
 
 const requestHeaders: HeadersInit = new Headers()
 requestHeaders.set('Content-Type', 'application/json; charset=utf-8')
@@ -26,10 +25,6 @@ export const request = async (
 
     return data
   } catch (e) {
-    if (e instanceof Error) {
-      throw e
-    } else {
-      console.log(e)
-    }
+    throw e
   }
 }

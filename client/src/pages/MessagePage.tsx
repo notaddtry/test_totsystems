@@ -1,7 +1,8 @@
 import React from 'react'
+
 import Message from '../components/Message/MessageInPage'
 
-const MessagePage = () => {
+const MessagePage: React.FC = () => {
   return (
     <div>
       <Message />

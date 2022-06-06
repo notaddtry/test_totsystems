@@ -1,10 +1,5 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router'
-import { useAppDispatch, useAppSelector } from '../../store/hooks'
-import { searchMessages } from '../../store/slices/messageSlice'
-import { IMessage } from '../../types'
-
-import styles from './search.module.scss'
 
 interface ISearchMessages {
   search: string
@@ -13,15 +8,12 @@ interface ISearchMessages {
 
 const SearchMessages: React.FC<ISearchMessages> = ({ search, setSearch }) => {
   const navigate = useNavigate()
-  const dispatch = useAppDispatch()
-  const searchedMessages = useAppSelector((state) => state.message.messages)
 
   const searchHandle = () => {
     if (search.trim()) {
       return navigate(`/message?s=${search}`)
     }
     navigate('/message')
-    // dispatch(searchMessages({ query: search }))
   }
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -36,7 +28,6 @@ const SearchMessages: React.FC<ISearchMessages> = ({ search, setSearch }) => {
           type='text'
           value={search}
           className='white col s6'
-          // value={search}
           onKeyDown={(e) => handleKeyPress(e)}
           onChange={(e) => setSearch(e.target.value)}
         />

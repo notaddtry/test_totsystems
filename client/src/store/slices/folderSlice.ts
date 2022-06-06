@@ -1,10 +1,11 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { request } from '../../hooks/http.hook'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+
+import { request } from '../../components/helpers/http'
 import { IError, IFolder } from '../../types'
 
 interface IInitialState {
   loading: boolean
-  error: string | null | undefined
+  error: IError | null
   folders: IFolder[]
   showModal: boolean
 }
@@ -28,7 +29,7 @@ export const fetchFolders = createAsyncThunk(
       const data = await request('/api/folders')
       return data
     } catch (error) {
-      return rejectWithValue(error as IError)
+      return rejectWithValue(error)
     }
   }
 )
@@ -40,7 +41,7 @@ export const addFolder = createAsyncThunk(
       const data = await request('/api/folders', 'POST', body)
       return data
     } catch (error) {
-      return rejectWithValue(error as IError)
+      return rejectWithValue(error)
     }
   }
 )
@@ -52,7 +53,7 @@ export const removeFolder = createAsyncThunk(
       const data = await request(`/api/folders/${id}`, 'DELETE')
       return data
     } catch (error) {
-      return rejectWithValue(error as IError)
+      return rejectWithValue(error)
     }
   }
 )
@@ -64,7 +65,7 @@ export const editFolder = createAsyncThunk(
       const data = await request(`/api/folders/${id}`, 'PUT', body)
       return data
     } catch (error) {
-      return rejectWithValue(error as IError)
+      return rejectWithValue(error)
     }
   }
 )
@@ -73,7 +74,7 @@ const folderSlice = createSlice({
   name: 'folder',
   initialState,
   reducers: {
-    setShowModal(state, action) {
+    setShowModal(state, action: PayloadAction<boolean>) {
       state.showModal = action.payload
     },
   },
@@ -85,45 +86,28 @@ const folderSlice = createSlice({
       .addCase(fetchFolders.fulfilled, (state, action) => {
         state.folders = action.payload
         state.loading = false
-        // console.log(state.folders)
       })
       .addCase(fetchFolders.rejected, (state, action) => {
         state.loading = false
-        // state.error = action.payload
+        state.error = action.error as IError
       })
 
       //addFolder
-      .addCase(addFolder.pending, (state) => {
-        state.loading = true
-      })
+
       .addCase(addFolder.fulfilled, (state, action) => {
         state.folders.push(action.payload)
-        state.loading = false
-      })
-      .addCase(addFolder.rejected, (state, action) => {
-        state.loading = false
-        // state.error = action.error
       })
 
       //removeFolder
-      .addCase(removeFolder.pending, (state) => {
-        state.loading = true
-      })
+
       .addCase(removeFolder.fulfilled, (state, action) => {
         state.folders = state.folders.filter(
           (folder) => folder.id !== action.payload
         )
-        state.loading = false
-      })
-      .addCase(removeFolder.rejected, (state, action) => {
-        state.loading = false
-        // state.error = action.error
       })
 
       //editFolder
-      .addCase(editFolder.pending, (state) => {
-        state.loading = true
-      })
+
       .addCase(editFolder.fulfilled, (state, action) => {
         const foldetToEdit = state.folders.find(
           (folder) => folder.id === action.payload.id
@@ -131,11 +115,6 @@ const folderSlice = createSlice({
         if (foldetToEdit) {
           foldetToEdit.name = action.payload.name
         }
-        state.loading = false
-      })
-      .addCase(editFolder.rejected, (state, action) => {
-        state.loading = false
-        // state.error = action.error
       })
   },
 })

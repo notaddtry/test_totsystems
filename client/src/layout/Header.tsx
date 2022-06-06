@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
+
 import SearchMessages from '../components/Search/SearchMessages'
 
-const Header = () => {
+const Header: React.FC = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const [search, setSearch] = useState('')
@@ -12,7 +13,8 @@ const Header = () => {
   }
 
   useEffect(() => {
-    setSearch('')
+    if (search) setSearch('')
+    // eslint-disable-next-line
   }, [location])
 
   return (

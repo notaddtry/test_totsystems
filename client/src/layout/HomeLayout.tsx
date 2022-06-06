@@ -1,9 +1,10 @@
 import React from 'react'
 import { Outlet } from 'react-router'
+
 import Footer from './Footer'
 import Header from './Header'
 
-const HomeLayout = () => {
+const HomeLayout: React.FC = () => {
   return (
     <>
       <Header />

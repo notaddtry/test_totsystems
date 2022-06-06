@@ -1,6 +1,7 @@
-import { useWindowWidth } from '@react-hook/window-size'
 import React from 'react'
 import { Link } from 'react-router-dom'
+
+import { useWindowWidth } from '@react-hook/window-size'
 
 const MOBILE_WIDTH = 768
 

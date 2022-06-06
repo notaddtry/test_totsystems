@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './layout.module.scss'
 
-const Footer = () => {
+const Footer: React.FC = () => {
   return (
     <footer className={`${styles.footer} page-footer deep-purple darken-1`}>
       <div className='footer-copyright'>

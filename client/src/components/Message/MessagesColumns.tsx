@@ -3,7 +3,7 @@ import React from 'react'
 
 const MOBILE_WIDTH = 768
 
-const MessagesColumns = () => {
+const MessagesColumns: React.FC = () => {
   const width = useWindowWidth()
 
   return (
