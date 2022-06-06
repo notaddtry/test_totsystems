@@ -1,31 +1,32 @@
 import express from 'express'
+import cors from 'cors'
 import path from 'path'
 import dotenv from 'dotenv'
+import { dirname } from 'path'
+import { fileURLToPath } from 'url'
 import folderRouter from './routes/folder.routes.js'
 import messagesRouter from './routes/message.routes.js'
-import { fileURLToPath } from 'url'
 dotenv.config()
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+const __dirname = dirname(fileURLToPath(import.meta.url))
 
 const app = express()
 
 app.use(express.json({ extended: true }))
+app.use(cors())
 app.use('/api/folders', folderRouter)
 app.use('/api/messages', messagesRouter)
+// notaddtry-mail.vercel.app
 
-if (process.env.NODE_ENV === 'production') {
-  app.use('/', express.static(path.join(__dirname, 'client', 'build')))
+let PORT = process.env.PORT || 4242
+
+if (process.env.NODE_ENV === 'prod') {
+  app.use(express.static(path.join(__dirname, 'client', 'build')))
 
   app.get('*', (_, res) => {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
   })
-}
 
-let PORT = process.env.PORT || 4242
-
-if (process.env.NODE_ENV === 'production') {
   PORT = process.env.PROD_PORT
 }
 

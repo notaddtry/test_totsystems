@@ -24,7 +24,7 @@ const FolderInPage: React.FC = () => {
   const folderToUpdate = folders.find((folder) => folder.id === params.id)
 
   const [messages, setMessages] = useState<IMessage[]>([])
-  const [folder, setFolder] = useState<IFolder | undefined>(folderToUpdate)
+  const [folder, setFolder] = useState<IFolder | undefined>()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<IError | null>(null)
 
@@ -42,24 +42,20 @@ const FolderInPage: React.FC = () => {
     setLoading(false)
   }
 
-  const updateFolder = useCallback(
-    (event: React.MouseEvent<HTMLElement>, id: string) => {
-      event.preventDefault()
-      event.stopPropagation()
-      if (newFolderName?.trim()) {
-        dispatch(setShowModal(false))
-        dispatch(editFolder({ body: newFolderName, id }))
-        M.toast({ html: 'Папка обновлена!' })
-      }
-    },
-    // eslint-disable-next-line
-    [folder]
-  )
+  const updateFolder = (event: React.MouseEvent<HTMLElement>, id: string) => {
+    event.preventDefault()
+    event.stopPropagation()
+    if (newFolderName?.trim()) {
+      dispatch(setShowModal(false))
+      dispatch(editFolder({ body: newFolderName, id }))
+      M.toast({ html: 'Папка обновлена!' })
+    }
+  }
 
   useEffect(() => {
     fetchData()
     // eslint-disable-next-line
-  }, [updateFolder])
+  }, [folderToUpdate])
 
   useEffect(() => {
     M.updateTextFields()
