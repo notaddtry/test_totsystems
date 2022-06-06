@@ -7,7 +7,7 @@ const App: React.FC = () => {
 
   return (
     <div className='wrapper'>
-      <Router>
+      <Router basename='/'>
         <>{routes}</>
       </Router>
     </div>

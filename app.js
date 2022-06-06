@@ -6,6 +6,10 @@ import messagesRouter from './routes/message.routes.js'
 import { fileURLToPath } from 'url'
 dotenv.config()
 
+if (process.env.NODE_ENV === 'production') {
+  dotenv.config({ path: __dirname + '/.env.production' })
+}
+
 const app = express()
 
 const __filename = fileURLToPath(import.meta.url)
