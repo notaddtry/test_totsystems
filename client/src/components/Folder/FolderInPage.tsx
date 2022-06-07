@@ -25,7 +25,7 @@ const FolderInPage: React.FC = () => {
 
   const [messages, setMessages] = useState<IMessage[]>([])
   const [folder, setFolder] = useState<IFolder | undefined>()
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [error, setError] = useState<IError | null>(null)
 
   const [newFolderName, setNewFolderName] = useState(folder?.name || '')
