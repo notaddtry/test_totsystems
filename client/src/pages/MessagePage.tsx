@@ -3,11 +3,7 @@ import React from 'react'
 import Message from '../components/Message/MessageInPage'
 
 const MessagePage: React.FC = () => {
-  return (
-    <div>
-      <Message />
-    </div>
-  )
+  return <Message />
 }
 
 export default MessagePage

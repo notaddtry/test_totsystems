@@ -37,7 +37,6 @@ const FolderList: React.FC = () => {
   useEffect(() => {
     dispatch(fetchFolders())
     dispatch(fetchMessages())
-    // eslint-disable-next-line
   }, [])
 
   useEffect(() => {
@@ -52,7 +51,6 @@ const FolderList: React.FC = () => {
     return () => {
       dispatch(setShowModal(false))
     }
-    // eslint-disable-next-line
   }, [location])
 
   if (error) {

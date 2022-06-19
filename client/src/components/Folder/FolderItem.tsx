@@ -33,15 +33,14 @@ const FolderItem: React.FC<IFolder> = ({ name, id, canBeEdited }) => {
 
   useEffect(() => {
     fetchMessagesCount()
-    // eslint-disable-next-line
   }, [])
 
   return (
     <li className='collection-item' style={{ display: 'flex' }}>
       <Link to={`/folder/${id}`} style={{ display: 'flex', flex: '1 1 100%' }}>
-        <span>{name}</span>
-
-        <span>[{error ? ` ${error.message} ` : `${messagesCount}`}]</span>
+        <span>
+          {name} [{error ? ` ${error.message} ` : `${messagesCount}`}]
+        </span>
       </Link>
       {canBeEdited ? (
         <button

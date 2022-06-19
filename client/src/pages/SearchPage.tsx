@@ -17,13 +17,12 @@ const SearchPage: React.FC = () => {
     } else {
       dispatch(fetchMessages())
     }
-    // eslint-disable-next-line
   }, [location])
 
   return (
     <>
-      <h1>Найденные сообщения</h1>
-      {search ? <h2>по запросу: {search}</h2> : <></>}
+      <h2>Найденные сообщения</h2>
+      {search ? <h3>по запросу: {search}</h3> : <></>}
 
       <SearchComponent />
     </>

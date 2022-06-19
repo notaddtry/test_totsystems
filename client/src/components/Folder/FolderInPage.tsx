@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 
@@ -10,9 +10,7 @@ import { request } from '../helpers/http'
 import NameModal from './NameModal'
 import Loader from '../Loader'
 import MessagesInFolder from '../Message/MessagesInFolder'
-import MessagesColumns from '../Message/MessagesColumns'
-
-const MOBILE_WIDTH = 768
+import { MOBILE_WIDTH } from './../helpers/constants'
 
 const FolderInPage: React.FC = () => {
   const params = useParams()
@@ -54,7 +52,6 @@ const FolderInPage: React.FC = () => {
 
   useEffect(() => {
     fetchData()
-    // eslint-disable-next-line
   }, [folderToUpdate])
 
   useEffect(() => {
@@ -65,7 +62,6 @@ const FolderInPage: React.FC = () => {
     return () => {
       if (showModal) dispatch(setShowModal(false))
     }
-    // eslint-disable-next-line
   }, [location])
 
   if (loading) {
@@ -81,7 +77,7 @@ const FolderInPage: React.FC = () => {
       <div className='row valign-wrapper'>
         <span className='col s9'>
           <h2>Папка:</h2>
-          <h4>{folder?.name}</h4>
+          <h3>{folder?.name}</h3>
         </span>
 
         <button
@@ -118,25 +114,33 @@ const FolderInPage: React.FC = () => {
         </div>
       ) : (
         <>
-          <MessagesColumns />
-          <ul className='collection'>
-            {messages.map((message) => (
-              <li
-                className={`collection-item row center ${
-                  message?.isRead ? '' : 'deep-purple lighten-5'
-                }`}
-                style={{ padding: '10px 0px' }}
-                key={message.id}>
-                <MessagesInFolder
-                  id={message.id}
-                  from={message.from}
-                  body={message.body}
-                  to={message.to}
-                  date={message.date}
-                />
-              </li>
-            ))}
-          </ul>
+          <table className='centered'>
+            <thead>
+              <tr>
+                <th>From</th>
+                {!(width <= MOBILE_WIDTH) ? <th>To</th> : <></>}
+                <th>Preview</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {messages.map((message) => (
+                <tr
+                  className={`${
+                    message?.isRead ? null : 'deep-purple lighten-5'
+                  }`}
+                  key={message.id}>
+                  <MessagesInFolder
+                    id={message.id}
+                    from={message.from}
+                    body={message.body}
+                    to={message.to}
+                    date={message.date}
+                  />
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </>
       )}
     </>

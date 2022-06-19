@@ -1,12 +1,14 @@
+import { useWindowWidth } from '@react-hook/window-size'
 import React, { useEffect, useState } from 'react'
 import { useAppSelector } from '../../store/hooks'
 
 import Loader from '../Loader'
-import MessagesColumns from '../Message/MessagesColumns'
 import MessagesInFolder from '../Message/MessagesInFolder'
+import { MOBILE_WIDTH } from './../helpers/constants'
 
 const SearchComponent: React.FC = () => {
   const [loading, setLoading] = useState(true)
+  const width = useWindowWidth()
 
   const messages = useAppSelector((state) => state.message.messages)
   const loadingFromStore = useAppSelector((state) => state.message.loading)
@@ -32,25 +34,33 @@ const SearchComponent: React.FC = () => {
         </div>
       ) : (
         <>
-          <MessagesColumns />
-          <ul className='collection'>
-            {messages.map((message) => (
-              <li
-                className={`collection-item row center ${
-                  message?.isRead ? '' : 'deep-purple lighten-5'
-                }`}
-                style={{ padding: '10px 0px' }}
-                key={message.id}>
-                <MessagesInFolder
-                  id={message.id}
-                  from={message.from}
-                  body={message.body}
-                  to={message.to}
-                  date={message.date}
-                />
-              </li>
-            ))}
-          </ul>
+          <table className='centered'>
+            <thead>
+              <tr>
+                <th>From</th>
+                {!(width <= MOBILE_WIDTH) ? <th>To</th> : <></>}
+                <th>Preview</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {messages.map((message) => (
+                <tr
+                  className={`${
+                    message?.isRead ? null : 'deep-purple lighten-5'
+                  }`}
+                  key={message.id}>
+                  <MessagesInFolder
+                    id={message.id}
+                    from={message.from}
+                    body={message.body}
+                    to={message.to}
+                    date={message.date}
+                  />
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </>
       )}
     </>

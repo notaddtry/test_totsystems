@@ -61,7 +61,6 @@ const Message: React.FC = () => {
   useEffect(() => {
     setLoading(true)
     fetchMessageInfo()
-    // eslint-disable-next-line
   }, [])
 
   if (loading) {
@@ -91,25 +90,24 @@ const Message: React.FC = () => {
           favorite_border
         </i>
       </div>
-      <div className='row'>
-        <span className='col s4'>
-          <h4>From:</h4>
-          <h6>{message?.from}</h6>
-        </span>
-        <span className='col s4'>
-          <h4>To:</h4>
-          <h6>{message?.to}</h6>
-        </span>
-        <span className='col s4'>
-          <h4>Date:</h4>
-          <h6>{message?.date}</h6>
-        </span>
-        <br />
-        <br />
-        <span className='col s12'>
-          <h6>{message?.body}</h6>
-        </span>
-      </div>
+
+      <table className='centered'>
+        <thead>
+          <tr>
+            <th>From</th>
+            <th>To</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{message?.from}</td>
+            <td>{message?.to}</td>
+            <td>{message?.date}</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>{message?.body}</p>
     </>
   )
 }

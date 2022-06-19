@@ -28,3 +28,15 @@ main {
 .cursor {
   cursor: pointer;
 }
+
+table tr td {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+table tr td a {
+  display: block;
+}
+
+a {
+  color: inherit;
+}

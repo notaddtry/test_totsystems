@@ -16,8 +16,8 @@ const useRoutes = () => {
         <Route element={<FolderPage />} path='/folder/:id' />
         <Route element={<MessagePage />} path='/message/:id' />
         <Route element={<SearchPage />} path='/message' />
+        <Route path='*' element={<Undefined />} />
       </Route>
-      <Route path='*' element={<Undefined />} />
     </Routes>
   )
 }
